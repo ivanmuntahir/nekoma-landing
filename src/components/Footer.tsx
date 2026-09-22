@@ -13,9 +13,8 @@ const tryoutLinks = [
 ]
 
 const nekomaLinks = [
-  { label: 'Mentor', href: '/mentor' },
+  { label: 'Mentor', href: '#mentor' },
   { label: 'FAQ', href: '#faq' },
-  { label: 'Tentang Nekoma', href: '/tentang' },
 ]
 
 export default function Footer() {
@@ -94,7 +93,7 @@ export default function Footer() {
 
             <div className="mt-6">
               <h3 className="text-sm font-bold text-slate-900">
-                Ikuti Kami
+                Follow kami di media sosial
               </h3>
 
               <div className="mt-4 flex items-center gap-3">
