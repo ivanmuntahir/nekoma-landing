@@ -2,6 +2,8 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import Footer from "@/components/Footer";
 import MentorSection from "@/components/MentorSection";
+import FrequentlyAsk from "@/components/FrequentlyAsk";
+import TryoutTypeSection from "@/components/TryoutTypeSection";
 
 export default function Home() {
   return (
@@ -10,6 +12,11 @@ export default function Home() {
       <main className="flex flex-1 flex-col">
         <HeroSection />
         <MentorSection />
+        <TryoutTypeSection category="skd" />
+        <TryoutTypeSection category="skb" />
+        <TryoutTypeSection category="kedinasan" />
+        <TryoutTypeSection category="pppk" />
+        <FrequentlyAsk />
         <Footer />
       </main>
     </div>

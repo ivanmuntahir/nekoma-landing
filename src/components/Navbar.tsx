@@ -106,9 +106,13 @@ export default function Navbar() {
             <Link href="/paket-tryout" className="text-sm font-semibold text-slate-600 hover:text-nekoma-orange transition-colors">
               Paket Tryout
             </Link>
-            <a href="#fitur" className="text-sm font-semibold text-slate-600 hover:text-nekoma-orange transition-colors">
-              Fitur
+            <a
+                href="#faq"
+                className="text-sm font-semibold text-slate-600 transition-colors hover:text-nekoma-orange"
+                >
+                FAQ
             </a>
+
 
             {/* CTA Utama */}
             <a
