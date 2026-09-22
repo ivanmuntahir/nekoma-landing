@@ -7,7 +7,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
 });
 
-const siteUrl = "https://nekoma.id"; // Ganti sesuai domain final kamu
+const siteUrl = "https://nekoma.id"; 
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
       "Latihan soal standar CAT BKN terbaru, pembahasan analitis, simulasi CAT real-time, evaluasi passing grade & ranking nasional.",
     images: [
       {
-        url: "/img/og-image.jpg", // Siapkan gambar 1200x630px di public/img/
+        url: "/img/logo.webp", // Siapkan gambar 1200x630px di public/img/
         width: 1200,
         height: 630,
         alt: "Nekoma Academy - Bimbel & Tryout CPNS",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     title: "Nekoma Academy — Bimbel & Tryout CAT CPNS 2026",
     description:
       "Latihan soal standar CAT BKN terbaru, simulasi CAT real-time, evaluasi passing grade & ranking nasional.",
-    images: ["/img/og-image.jpg"],
+    images: ["/img/logo.webp"],
   },
   robots: {
     index: true,

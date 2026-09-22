@@ -58,19 +58,19 @@ export default function HeroSection() {
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] text-slate-900">
-              Persiapkan SKD & SKB CPNS <br className="hidden sm:block" />
-              <span className="text-nekoma-orange">Tanpa Perlu Pusing.</span>
+              Persiapkan SKD <br className="hidden sm:block" />
+              <span className="text-nekoma-orange">Sekarang Juga.</span>
             </h1>
 
             <p className="mt-6 text-base sm:text-lg leading-relaxed text-slate-600 max-w-2xl">
-              Latihan soal standar CAT BKN terbaru, pembahasannya analitis, lengkap dengan evaluasi passing grade & ranking nasional. Belajar dari mana saja!
+              Latihan soal standar CAT BKN terbaru lengkap dengan evaluasi passing grade & ranking nasional. Belajar dari mana saja!
             </p>
 
             {/* Feature Pills */}
             <div className="mt-8 flex flex-wrap gap-4 text-sm text-slate-700 font-medium">
               <div className="flex items-center gap-2">
                 <span className="w-5 h-5 rounded-full bg-orange-100 text-nekoma-orange flex items-center justify-center font-bold text-xs">✓</span>
-                Soal Sesuai FR Terbaru
+                Soal Sesuai Kisi-Kisi BKN
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-5 h-5 rounded-full bg-orange-100 text-nekoma-orange flex items-center justify-center font-bold text-xs">✓</span>
@@ -78,7 +78,7 @@ export default function HeroSection() {
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-5 h-5 rounded-full bg-orange-100 text-nekoma-orange flex items-center justify-center font-bold text-xs">✓</span>
-                Ranking & Evaluasi SKD
+                Ranking & Evaluasi 
               </div>
             </div>
           </div>
@@ -104,7 +104,7 @@ export default function HeroSection() {
                   <input
                     type="text"
                     required
-                    placeholder="Contoh: Ivan Muntahir"
+                    placeholder="Contoh: Budi"
                     value={nama}
                     onChange={(e) => setNama(e.target.value)}
                     className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-nekoma-orange focus:border-nekoma-orange text-sm outline-none transition-all"

@@ -1,5 +1,7 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import Footer from "@/components/Footer";
+import MentorSection from "@/components/MentorSection";
 
 export default function Home() {
   return (
@@ -7,7 +9,8 @@ export default function Home() {
       <Navbar />
       <main className="flex flex-1 flex-col">
         <HeroSection />
-        {/* Section-section berikutnya (Fitur, Testimoni, dll) nambah di sini */}
+        <MentorSection />
+        <Footer />
       </main>
     </div>
   );
