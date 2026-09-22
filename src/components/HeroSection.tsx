@@ -1,153 +1,123 @@
 'use client'
 
-import { useState, type FormEvent } from 'react'
+import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
 
+// ⚠️ Cocokkan dulu nomor ini dengan WA Admin yang benar sebelum deploy —
+// kode lama pakai 6285777126038, pesanmu barusan nulis 628577126038.
+const ADMIN_WA_NUMBER = '6285777126038'
+
+const FORMASI_OPTIONS = [
+  { id: 'skd', label: 'SKD CPNS & Kedinasan' },
+  { id: 'pppk', label: 'Tes Kompetensi PPPK' },
+  { id: 'skb-lain', label: 'SKB CPNS' },
+] as const
+
 export default function HeroSection() {
-  const [nama, setNama] = useState('')
-  const [whatsapp, setWhatsapp] = useState('')
-  const [formasi, setFormasi] = useState('SKD CPNS')
-  const [loading, setLoading] = useState(false)
+  const [formasi, setFormasi] = useState<(typeof FORMASI_OPTIONS)[number]>(FORMASI_OPTIONS[0])
 
-  const handleSubmitLead = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setLoading(true)
-
-    try {
-      // 1. Simpan Lead ke Supabase Database
-      const { error } = await supabase.from('leads').insert({
-        nama,
-        whatsapp,
-        target_formasi: formasi,
+  const handleCtaClick = (intent: 'mini-tryout' | 'daftar') => {
+    supabase
+      .from('leads')
+      .insert({
+        target_formasi: formasi.label,
+        intent,
         source: 'landing_hero',
       })
+      .then(({ error }) => {
+        if (error) console.error('Supabase log error:', error.message)
+      })
 
-      if (error) {
-        console.error('Supabase Error:', error.message)
-        alert('Gagal menyimpan data, silakan coba lagi.')
-        return
-      }
+    const message =
+      intent === 'mini-tryout'
+        ? `Halo Admin Nekoma Academy, saya mau coba mini tryout gratis untuk ${formasi.label}.`
+        : `Halo Admin Nekoma Academy, saya mau daftar bimbel untuk ${formasi.label}.`
 
-      // 2. Redirect Otomatis ke WhatsApp Admin Nekoma Academy
-      const targetNumber = '6285777126038' // Masukkan nomor WA Admin kamu
-      const message = encodeURIComponent(
-        `Halo Admin Nekoma Academy, saya ${nama}. Saya sudah daftar di website nekoma.id dan mau klaim akses gratis Latihan Soal & Tryout ${formasi}!`
-      )
-
-      window.location.href = `https://wa.me/${targetNumber}?text=${message}`
-    } catch (err) {
-      console.error('Error submitting lead:', err)
-      alert('Terjadi kesalahan, silakan coba lagi.')
-    } finally {
-      setLoading(false)
-    }
+    window.location.href = `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(message)}`
   }
 
   return (
-    <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-orange-50/40 via-white to-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-24">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          
-          {/* Kolom Kiri: Headline & Deskripsi */}
-          <div className="lg:col-span-7 animate-fade-up">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-100/80 border border-orange-200 mb-6">
-              <span className="w-2 h-2 rounded-full bg-nekoma-orange animate-pulse"></span>
-              <span className="text-xs font-bold text-nekoma-orange uppercase tracking-wider">
-                Bimbel & Tryout CAT CPNS 2026
-              </span>
-            </div>
+    <section className="border-b border-slate-200 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-start">
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] text-slate-900">
-              Persiapkan SKD <br className="hidden sm:block" />
-              <span className="text-nekoma-orange">Sekarang Juga.</span>
+          {/* Kolom kiri: headline & konteks */}
+          <div className="lg:col-span-7">
+            <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-bold tracking-tight leading-[1.12] text-slate-900 max-w-xl">
+              SKD CPNS 2026 tinggal menghitung hari.
             </h1>
 
-            <p className="mt-6 text-base sm:text-lg leading-relaxed text-slate-600 max-w-2xl">
-              Latihan soal standar CAT BKN terbaru lengkap dengan evaluasi passing grade & ranking nasional. Belajar dari mana saja!
+            <p className="mt-5 text-base sm:text-lg leading-relaxed text-slate-600 max-w-lg">
+              Gratis trial soalnya sebelum daftar. Latihan soal mengikuti standar CAT BKN terbaru,
+              lengkap dengan evaluasi passing grade dan posisi rankingmu dibanding peserta lain.
             </p>
 
-            {/* Feature Pills */}
-            <div className="mt-8 flex flex-wrap gap-4 text-sm text-slate-700 font-medium">
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-orange-100 text-nekoma-orange flex items-center justify-center font-bold text-xs">✓</span>
-                Soal Sesuai Kisi-Kisi BKN
+            <dl className="mt-10 grid grid-cols-3 gap-6 max-w-lg border-t border-slate-200 pt-6">
+              <div>
+                <dt className="text-2xl font-bold text-slate-900">500+</dt>
+                <dd className="text-sm text-slate-500 mt-1">Soal sesuai kisi-kisi BKN</dd>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-orange-100 text-nekoma-orange flex items-center justify-center font-bold text-xs">✓</span>
-                Simulasi CAT Real-Time
+              <div>
+                <dt className="text-2xl font-bold text-slate-900">Real-time</dt>
+                <dd className="text-sm text-slate-500 mt-1">Simulasi CAT sesuai standar BKN</dd>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-orange-100 text-nekoma-orange flex items-center justify-center font-bold text-xs">✓</span>
-                Ranking & Evaluasi 
+              <div>
+                <dt className="text-2xl font-bold text-slate-900">Nasional</dt>
+                <dd className="text-sm text-slate-500 mt-1">Ranking & evaluasi hasil</dd>
               </div>
-            </div>
+            </dl>
           </div>
 
-          {/* Kolom Kanan: Card Form Lead Capture (Marketing Funnel) */}
+          {/* Kolom kanan: pilih formasi + dua aksi langsung ke WA */}
           <div className="lg:col-span-5" id="klaim-soal">
-            <div className="relative bg-white border border-slate-200 rounded-2xl shadow-xl p-6 sm:p-8">
-              <div className="text-center mb-6">
-                <span className="inline-block px-3 py-1 rounded-full bg-slate-100 text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">
-                  Akses Gratis
-                </span>
-                <h3 className="text-xl font-extrabold text-slate-900">
-                  Dapatkan Bank Soal & Tryout SKD Gratis
-                </h3>
-                <p className="text-xs text-slate-500 mt-1">
-                  Isi form singkat untuk klaim bonus modul PDF & akses latihan soal.
-                </p>
+            <div className="relative pl-6 border-l-2 border-nekoma-orange">
+              <h2 className="text-lg font-bold text-slate-900">
+                Pilih jenis tryout, langsung mulai.
+              </h2>
+              <p className="text-sm text-slate-500 mt-1 mb-5">
+                Nggak perlu isi form. Klik jenis tryout, klik tombol, admin kami siap respon melalui WhatsApp.
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-6">
+                {FORMASI_OPTIONS.map((option) => {
+                  const active = option.id === formasi.id
+                  return (
+                    <button
+                      key={option.id}
+                      type="button"
+                      onClick={() => setFormasi(option)}
+                      aria-pressed={active}
+                      className={`px-3.5 py-2 rounded-md text-sm font-medium border transition-colors ${
+                        active
+                          ? 'bg-slate-900 border-slate-900 text-white'
+                          : 'bg-white border-slate-300 text-slate-700 hover:border-slate-400'
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  )
+                })}
               </div>
 
-              <form onSubmit={handleSubmitLead} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Nama Lengkap</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Contoh: Budi"
-                    value={nama}
-                    onChange={(e) => setNama(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-nekoma-orange focus:border-nekoma-orange text-sm outline-none transition-all"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Nomor WhatsApp</label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="081234567890"
-                    value={whatsapp}
-                    onChange={(e) => setWhatsapp(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-nekoma-orange focus:border-nekoma-orange text-sm outline-none transition-all"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Target Ujian</label>
-                  <select
-                    value={formasi}
-                    onChange={(e) => setFormasi(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-nekoma-orange focus:border-nekoma-orange text-sm outline-none transition-all bg-white"
-                  >
-                    <option value="SKD CPNS">SKD CPNS (TIU, TWK, TKP)</option>
-                    <option value="SKB Pranata Komputer">SKB Pranata Komputer / Manggala Informatika</option>
-                    <option value="SKB Teknis Lainnya">SKB Formasi Teknis Lainnya</option>
-                    <option value="Sekolah Kedinasan">Sekolah Kedinasan</option>
-                  </select>
-                </div>
-
+              <div className="space-y-3">
                 <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full py-3.5 px-6 rounded-lg bg-nekoma-orange hover:bg-nekoma-dark-orange text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                  type="button"
+                  onClick={() => handleCtaClick('mini-tryout')}
+                  className="w-full py-3.5 px-6 rounded-md bg-nekoma-orange hover:bg-nekoma-dark-orange text-white font-bold text-sm transition-colors"
                 >
-                  {loading ? 'Memproses...' : 'Klaim Soal Gratis via WhatsApp'}
+                  Coba Mini Tryout Gratis
                 </button>
-              </form>
-              
-              <p className="text-[10px] text-center text-slate-400 mt-4">
-                *Data kamu aman & langsung terhubung dengan Admin Nekoma Academy.
+                <button
+                  type="button"
+                  onClick={() => handleCtaClick('daftar')}
+                  className="w-full py-3.5 px-6 rounded-md border border-slate-300 text-slate-800 font-semibold text-sm hover:border-slate-400 transition-colors"
+                >
+                  Daftar Tryout melalui Admin
+                </button>
+              </div>
+
+              <p className="text-xs text-slate-400 mt-4">
+                Jaminan Aman dan Terhubung langsung dengan Admin Nekoma Academy di WhatsApp.
               </p>
             </div>
           </div>
