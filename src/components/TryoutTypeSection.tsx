@@ -1,4 +1,6 @@
-import type { ReactNode } from 'react'
+'use client'
+
+import { useState, type ReactNode } from 'react'
 
 type CategoryKey = 'skd' | 'skb' | 'kedinasan' | 'pppk'
 
@@ -72,7 +74,14 @@ const icons = {
       strokeWidth="1.6"
       aria-hidden="true"
     >
-      <rect x="4" y="5" width="16" height="10" rx="1" strokeLinejoin="round" />
+      <rect
+        x="4"
+        y="5"
+        width="16"
+        height="10"
+        rx="1"
+        strokeLinejoin="round"
+      />
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -158,7 +167,12 @@ const icons = {
     >
       <circle cx="12" cy="12" r="8" />
       <circle cx="12" cy="12" r="4" />
-      <circle cx="12" cy="12" r="0.6" fill="currentColor" />
+      <circle
+        cx="12"
+        cy="12"
+        r="0.6"
+        fill="currentColor"
+      />
     </svg>
   ),
 
@@ -184,22 +198,21 @@ const CATEGORY_DATA: Record<CategoryKey, CategoryContent> = {
   skd: {
     eyebrow: 'CPNS · Tahap 1',
     title: 'Bagian Tes SKD CPNS',
-    subtitle:
-      'Tiga jenis tes yang harus dilewati melalui sistem CAT BKN, sesuai ambang batas resmi yang berlaku.',
+    subtitle: 'Tiga jenis tes utama dalam Seleksi Kompetensi Dasar.',
     parts: [
       {
         title: 'TWK — Wawasan Kebangsaan',
-        desc: 'Pancasila, UUD 1945, Bhinneka Tunggal Ika, dan NKRI. Mengukur pemahaman nilai kebangsaan.',
+        desc: 'Pancasila, UUD 1945, Bhinneka Tunggal Ika, dan NKRI.',
         icon: icons.flag,
       },
       {
         title: 'TIU — Intelegensia Umum',
-        desc: 'Kemampuan verbal, numerik, figural, dan logika. Bagian yang banyak membutuhkan latihan soal.',
+        desc: 'Kemampuan verbal, numerik, figural, dan logika.',
         icon: icons.brain,
       },
       {
         title: 'TKP — Karakteristik Pribadi',
-        desc: 'Integritas, pelayanan publik, kerja sama, dan orientasi hasil. Jawaban memiliki skor bertingkat.',
+        desc: 'Integritas, pelayanan publik, kerja sama, dan orientasi hasil.',
         icon: icons.heart,
       },
     ],
@@ -208,22 +221,21 @@ const CATEGORY_DATA: Record<CategoryKey, CategoryContent> = {
   skb: {
     eyebrow: 'CPNS · Tahap 2',
     title: 'Bagian Tes SKB CPNS',
-    subtitle:
-      'Materi dan bentuk tes berbeda tergantung instansi dan formasi yang dilamar. Berikut gambaran umumnya.',
+    subtitle: 'Materi SKB menyesuaikan formasi dan instansi yang dilamar.',
     parts: [
       {
         title: 'Kompetensi Teknis',
-        desc: 'CAT atau praktik sesuai bidang formasi, seperti Pranata Komputer atau Analis.',
+        desc: 'Tes sesuai bidang dan kebutuhan formasi yang dilamar.',
         icon: icons.laptop,
       },
       {
         title: 'Tes Tambahan Instansi',
-        desc: 'Sebagian instansi menambahkan psikotes, tes fisik, atau uji kompetensi lapangan sesuai kebutuhan jabatan.',
+        desc: 'Dapat mencakup psikotes, tes fisik, atau uji kompetensi tertentu.',
         icon: icons.clipboard,
       },
       {
         title: 'Wawancara',
-        desc: 'Menilai kesiapan kerja, motivasi, dan kesesuaian dengan unit kerja yang dituju.',
+        desc: 'Menggali kesiapan, motivasi, dan kesesuaian dengan jabatan.',
         icon: icons.chat,
       },
     ],
@@ -233,26 +245,26 @@ const CATEGORY_DATA: Record<CategoryKey, CategoryContent> = {
     eyebrow: 'Sekolah Kedinasan',
     title: 'Bagian Tes Sekolah Kedinasan',
     subtitle:
-      'Dasarnya mirip SKD, ditambah beberapa tahap khusus yang menjadi ciri seleksi sekolah kedinasan seperti STAN, IPDN, dan STIS.',
+      'Seleksi dasar ditambah tahapan khusus sesuai sekolah kedinasan.',
     parts: [
       {
         title: 'TWK, TIU & TKP',
-        desc: 'Materi dasar yang juga terdapat dalam SKD CPNS dan dapat menjadi bekal untuk kedua jalur seleksi.',
+        desc: 'Materi dasar seleksi yang menjadi bagian dari SKD.',
         icon: icons.brain,
       },
       {
         title: 'Tes Kesehatan',
-        desc: 'Pemeriksaan fisik dan kesehatan sesuai standar masing-masing instansi kedinasan.',
+        desc: 'Pemeriksaan kesehatan sesuai standar instansi.',
         icon: icons.stethoscope,
       },
       {
         title: 'Kesamaptaan',
-        desc: 'Tes kebugaran jasmani seperti lari, push-up, dan sit-up, terutama untuk instansi dengan tuntutan fisik tertentu.',
+        desc: 'Tes kebugaran seperti lari, push-up, dan sit-up pada instansi tertentu.',
         icon: icons.run,
       },
       {
         title: 'Psikotes & Wawancara',
-        desc: 'Menilai aspek kepribadian dan kesiapan untuk menjalani pendidikan kedinasan.',
+        desc: 'Tahapan untuk melihat aspek kepribadian dan kesiapan peserta.',
         icon: icons.chat,
       },
     ],
@@ -262,73 +274,124 @@ const CATEGORY_DATA: Record<CategoryKey, CategoryContent> = {
     eyebrow: 'PPPK',
     title: 'Bagian Tes PPPK',
     subtitle:
-      'Mekanismenya berbeda dari CPNS reguler, dengan kompetensi sesuai jabatan yang dilamar sebagai bagian utama seleksi.',
+      'Seleksi kompetensi yang disesuaikan dengan jabatan yang dilamar.',
     parts: [
       {
         title: 'Kompetensi Teknis',
-        desc: 'Soal sesuai bidang jabatan yang dilamar dan menjadi bagian utama dalam penilaian kompetensi.',
+        desc: 'Mengukur penguasaan bidang sesuai jabatan yang dilamar.',
         icon: icons.laptop,
       },
       {
         title: 'Manajerial',
-        desc: 'Mengukur kemampuan mengelola pekerjaan, mengambil keputusan, dan bekerja dalam tim.',
+        desc: 'Kemampuan mengelola pekerjaan, mengambil keputusan, dan bekerja dalam tim.',
         icon: icons.target,
       },
       {
         title: 'Sosial Kultural',
-        desc: 'Mengukur kepekaan terhadap keberagaman dan kemampuan beradaptasi di lingkungan kerja yang majemuk.',
+        desc: 'Kemampuan beradaptasi dan bekerja dalam lingkungan yang beragam.',
         icon: icons.users,
       },
       {
         title: 'Wawancara',
-        desc: 'Menilai aspek kesiapan dan motivasi kerja sebagai bagian dari rangkaian seleksi.',
+        desc: 'Menilai kesiapan dan motivasi kerja dalam rangkaian seleksi.',
         icon: icons.chat,
       },
     ],
   },
 }
 
-export default function TryoutTypeSection({
-  category,
-}: {
-  category: CategoryKey
-}) {
-  const data = CATEGORY_DATA[category]
+const categories: { key: CategoryKey; label: string }[] = [
+  { key: 'skd', label: 'SKD CPNS' },
+  { key: 'skb', label: 'SKB CPNS' },
+  { key: 'kedinasan', label: 'Kedinasan' },
+  { key: 'pppk', label: 'PPPK' },
+]
+
+export default function TryoutTypeSection() {
+  const [activeCategory, setActiveCategory] = useState<CategoryKey>('skd')
+  const data = CATEGORY_DATA[activeCategory]
 
   return (
-    <section className="bg-white">
-      <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-        <span className="text-xs font-semibold tracking-wide text-nekoma-orange">
-          {data.eyebrow}
-        </span>
+    <section
+      id="tryout"
+      className="scroll-mt-24 bg-white"
+    >
+      <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.14em] text-nekoma-orange">
+            Pilihan Tryout
+          </span>
 
-        <h2 className="mt-2 max-w-xl text-2xl font-bold tracking-tight text-nekoma-navy sm:text-3xl">
-          {data.title}
-        </h2>
+          <h2 className="mt-2 text-2xl font-bold tracking-tight text-nekoma-navy sm:text-3xl">
+            Persiapkan tes sesuai tujuanmu
+          </h2>
 
-        <p className="mt-3 max-w-xl text-slate-600">{data.subtitle}</p>
+          <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
+            Pilih jenis seleksi untuk melihat bagian tes yang perlu kamu
+            persiapkan.
+          </p>
+        </div>
 
-        <div className="mt-10 grid gap-5 sm:grid-cols-2">
-          {data.parts.map((part) => (
-            <article
-              key={part.title}
-              className="flex gap-4 rounded-lg border border-slate-200 p-5"
-            >
-              <div className="flex h-10 w-10 flex-none items-center justify-center rounded-md bg-orange-50 text-nekoma-orange">
-                <div className="h-5 w-5">{part.icon}</div>
-              </div>
+        <div className="mt-8 flex gap-2 overflow-x-auto pb-2">
+          {categories.map((item) => {
+            const isActive = activeCategory === item.key
 
-              <div className="min-w-0">
-                <h3 className="text-sm font-semibold text-nekoma-navy">
-                  {part.title}
-                </h3>
+            return (
+              <button
+                key={item.key}
+                type="button"
+                onClick={() => setActiveCategory(item.key)}
+                className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+                  isActive
+                    ? 'bg-nekoma-orange text-white'
+                    : 'bg-slate-100 text-slate-600 hover:bg-orange-50 hover:text-nekoma-orange'
+                }`}
+              >
+                {item.label}
+              </button>
+            )
+          })}
+        </div>
 
-                <p className="mt-1 text-sm leading-relaxed text-slate-600">
-                  {part.desc}
-                </p>
-              </div>
-            </article>
-          ))}
+        <div className="mt-5 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="border-b border-slate-100 bg-slate-50/70 px-5 py-5 sm:px-7">
+            <span className="text-xs font-semibold uppercase tracking-wide text-nekoma-orange">
+              {data.eyebrow}
+            </span>
+
+            <h3 className="mt-1 text-xl font-bold tracking-tight text-nekoma-navy sm:text-2xl">
+              {data.title}
+            </h3>
+
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600">
+              {data.subtitle}
+            </p>
+          </div>
+
+          <div className="grid divide-y divide-slate-100 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+            {data.parts.map((part) => (
+              <article
+                key={part.title}
+                className="group flex gap-4 p-5 transition-colors hover:bg-orange-50/40 sm:p-6"
+              >
+                <div className="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-orange-50 text-nekoma-orange transition-transform group-hover:scale-105">
+                  <div className="h-5 w-5">
+                    {part.icon}
+                  </div>
+                </div>
+
+                <div className="min-w-0">
+                  <h4 className="text-sm font-semibold text-nekoma-navy">
+                    {part.title}
+                  </h4>
+
+                  <p className="mt-1 text-sm leading-relaxed text-slate-600">
+                    {part.desc}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

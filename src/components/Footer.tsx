@@ -2,10 +2,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const tryoutLinks = [
-  { label: 'SKD CPNS', href: '/skd' },
-  { label: 'SKB CPNS', href: '/skb' },
-  { label: 'Sekolah Kedinasan', href: '/kedinasan' },
-  { label: 'PPPK', href: '/pppk' },
+  { label: 'SKD CPNS', href: '#tryout' },
+  { label: 'SKB CPNS', href: '#tryout' },
+  { label: 'Sekolah Kedinasan', href: '#tryout' },
+  { label: 'PPPK', href: '#tryout' },
+  {
+    label: 'Ebook Analisis Formasi CPNS',
+    href: '#ebook-formasi',
+  },
 ]
 
 const nekomaLinks = [
@@ -36,6 +40,7 @@ export default function Footer() {
                   <span className="text-lg font-extrabold tracking-tight text-slate-900">
                     NEKOMA
                   </span>
+
                   <span className="text-xs font-semibold tracking-[0.08em] text-slate-600">
                     ACADEMY
                   </span>
@@ -60,12 +65,12 @@ export default function Footer() {
             <ul className="mt-4 space-y-3">
               {tryoutLinks.map((item) => (
                 <li key={item.label}>
-                  <Link
+                  <a
                     href={item.href}
                     className="text-sm text-slate-500 transition-colors hover:text-nekoma-orange"
                   >
                     {item.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>

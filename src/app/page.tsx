@@ -12,10 +12,7 @@ export default function Home() {
       <main className="flex flex-1 flex-col">
         <HeroSection />
         <MentorSection />
-        <TryoutTypeSection category="skd" />
-        <TryoutTypeSection category="skb" />
-        <TryoutTypeSection category="kedinasan" />
-        <TryoutTypeSection category="pppk" />
+        <TryoutTypeSection />
         <FrequentlyAsk />
         <Footer />
       </main>
