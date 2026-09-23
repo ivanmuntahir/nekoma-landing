@@ -148,7 +148,7 @@ export default function Navbar() {
             </div>
 
             <Link
-              href="/mentor"
+              href="#mentor"
               className="text-sm font-semibold text-slate-600 transition-colors hover:text-nekoma-orange"
             >
               Mentor
