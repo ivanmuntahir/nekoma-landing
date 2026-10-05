@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import MentorSection from "@/components/MentorSection";
 import FrequentlyAsk from "@/components/FrequentlyAsk";
 import TryoutTypeSection from "@/components/TryoutTypeSection";
+import TryoutPackage from "@/components/TryoutPackage";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <Navbar />
       <main className="flex flex-1 flex-col">
         <HeroSection />
+        <TryoutPackage />
         <MentorSection />
         <TryoutTypeSection />
         <FrequentlyAsk />
