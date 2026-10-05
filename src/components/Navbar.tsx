@@ -162,7 +162,7 @@ export default function Navbar() {
             </a>
 
             <a
-              href="#klaim-soal"
+              href="https://wa.me/6285777126038?text=Halo%20Nekoma%20Academy%2C%20saya%20ingin%20mendapatkan%20mini%20tryout%20gratis."
               className="inline-flex items-center justify-center rounded-lg bg-nekoma-orange px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-nekoma-dark-orange hover:shadow-md"
             >
               Coba Gratis
