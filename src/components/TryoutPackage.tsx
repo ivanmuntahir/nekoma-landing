@@ -133,16 +133,7 @@ function AccountHint() {
         rel="noopener noreferrer"
         className="font-semibold text-orange-600 hover:underline"
       >
-        Daftar dulu
-      </a>
-      {" · "}
-      <a
-        href={LOGIN_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="font-semibold text-orange-600 hover:underline"
-      >
-        Masuk
+        Daftar di sini
       </a>
     </p>
   );
