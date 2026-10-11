@@ -1,12 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Clock, FileQuestion, Flame, Loader2 } from "lucide-react";
+import { createPortal } from "react-dom";
+import { ArrowRight, Clock, FileQuestion, Flame, Loader2, X } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
 /* KONFIGURASI                                                         */
 /* ------------------------------------------------------------------ */
 const WA_NUMBER = "6285777126038";
+const SALES_OPEN = true; // ubah ke false untuk mode "Segera Hadir" (tombol Beli dinonaktifkan)
+const SERVICE_HOURS = "08.00–22.00 WIB"; // jam layanan admin
+const CONFIRM_ETA = "maksimal 1×24 jam"; // estimasi konfirmasi
+const QRIS_IMAGE = "/img/qris.webp"; // taruh gambar QRIS di public/img/qris.webp
+const REGISTER_URL = "https://tryout.nekoma.id/dashboard/register";
+const LOGIN_URL = "https://tryout.nekoma.id/dashboard/login";
 const BUNDLE_QUOTA = 20; // ubah sesuai kebutuhan (saran: 30-50)
 const MIN_DWELL_MS = 2500; // tombol "aktif" setelah kartu terlihat sekian ms
 const CLICK_COOLDOWN_MS = 8000; // jeda antar klik
@@ -116,10 +123,142 @@ function PriceBlock({ pkg }: { pkg: PackageData }) {
   );
 }
 
-function PackageCard({ pkg }: { pkg: PackageData }) {
-  const href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
-    `Halo, saya mau order ${pkg.title}`
+function AccountHint() {
+  return (
+    <p className="mt-3 text-center text-[11px] leading-relaxed text-neutral-400">
+      Belum punya akun?{" "}
+      <a
+        href={REGISTER_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-semibold text-orange-600 hover:underline"
+      >
+        Daftar dulu
+      </a>
+      {" · "}
+      <a
+        href={LOGIN_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-semibold text-orange-600 hover:underline"
+      >
+        Masuk
+      </a>
+    </p>
+  );
+}
+
+function waConfirmUrl(pkg: PackageData) {
+  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
+    `Halo admin Nekoma, saya sudah bayar via QRIS untuk ${pkg.title} (${rp(
+      pkg.price
+    )}). Email akun saya: (isi email). Bukti transfer saya lampirkan di chat ini.`
   )}`;
+}
+
+function PaymentModal({
+  pkg,
+  onClose,
+}: {
+  pkg: PackageData;
+  onClose: () => void;
+}) {
+  const [qrError, setQrError] = useState(false);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-0 sm:items-center sm:p-4"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Pembayaran ${pkg.title}`}
+    >
+      <div
+        className="relative max-h-[92vh] w-full max-w-sm overflow-y-auto rounded-t-3xl bg-white p-5 shadow-2xl sm:rounded-3xl sm:p-6"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Tutup"
+          className="absolute right-4 top-4 rounded-full p-1.5 text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-neutral-700"
+        >
+          <X className="h-5 w-5" />
+        </button>
+
+        <p className="pr-8 text-xs font-bold uppercase tracking-wider text-orange-600">
+          Pembayaran QRIS
+        </p>
+        <h3 className="mt-1 pr-8 font-[family-name:var(--font-jakarta)] text-base font-bold leading-snug text-neutral-900">
+          {pkg.title}
+        </h3>
+
+        <div className="mt-4 rounded-2xl bg-orange-50 p-4 text-center">
+          <p className="text-xs text-neutral-500">Total bayar</p>
+          <p className="font-[family-name:var(--font-jakarta)] text-3xl font-extrabold text-[#102741]">
+            {rp(pkg.price)}
+          </p>
+        </div>
+
+        <div className="mt-4 flex justify-center rounded-2xl border border-neutral-200 bg-white p-3">
+          {qrError ? (
+            <p className="py-16 text-center text-sm text-neutral-400">
+              QRIS belum tersedia. Silakan hubungi admin via WhatsApp.
+            </p>
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={QRIS_IMAGE}
+              alt="QRIS pembayaran Nekoma Academy"
+              onError={() => setQrError(true)}
+              className="h-auto w-full max-w-[260px] object-contain"
+            />
+          )}
+        </div>
+
+        <ol className="mt-4 list-decimal space-y-1 pl-5 text-xs leading-relaxed text-neutral-500">
+          <li>Scan QRIS memakai m-banking atau e-wallet.</li>
+          <li>
+            Masukkan nominal <b>{rp(pkg.price)}</b> lalu bayar.
+          </li>
+          <li>Screenshot bukti bayar, lalu kirim ke admin.</li>
+        </ol>
+
+        <a
+          href={waConfirmUrl(pkg)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-[#102741] px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-[#0b1c30]"
+        >
+          Konfirmasi Admin via WhatsApp
+          <ArrowRight className="h-4 w-4" />
+        </a>
+        <p className="mt-3 text-center text-[11px] text-neutral-400">
+          Paket diaktifkan admin setelah pembayaran dicek.
+        </p>
+        <p className="mt-2 rounded-lg bg-neutral-50 px-3 py-2 text-center text-[11px] leading-relaxed text-neutral-500">
+          Jam layanan admin {SERVICE_HOURS}. Konfirmasi {CONFIRM_ETA} setelah
+          bukti bayar diterima.
+        </p>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+function PackageCard({ pkg }: { pkg: PackageData }) {
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="group flex flex-col rounded-3xl border border-neutral-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-orange-200 hover:shadow-xl sm:p-5">
@@ -145,16 +284,24 @@ function PackageCard({ pkg }: { pkg: PackageData }) {
 
       <div className="mt-5 flex items-center justify-between gap-3 border-t border-neutral-100 pt-4">
         <PriceBlock pkg={pkg} />
-        <a
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1.5 rounded-xl bg-[#102741] px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-[#0b1c30]"
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          disabled={!SALES_OPEN}
+          className="flex items-center gap-1.5 rounded-xl bg-[#102741] px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-[#0b1c30] disabled:cursor-not-allowed disabled:bg-neutral-300 disabled:hover:bg-neutral-300"
         >
-          Beli
-          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-        </a>
+          {SALES_OPEN ? (
+            <>
+              Beli
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+            </>
+          ) : (
+            "Segera Hadir"
+          )}
+        </button>
       </div>
+      <AccountHint />
+      {open && <PaymentModal pkg={pkg} onClose={() => setOpen(false)} />}
     </div>
   );
 }
@@ -166,6 +313,7 @@ function BundleCard({ pkg }: { pkg: PackageData }) {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
+  const [open, setOpen] = useState(false);
   const honeypot = useRef<HTMLInputElement>(null);
   const mountedAt = useRef(Date.now());
   const lastClick = useRef(0);
@@ -211,7 +359,7 @@ function BundleCard({ pkg }: { pkg: PackageData }) {
 
   async function handleClaim() {
     const now = Date.now();
-    if (busy || soldOut) return;
+    if (busy || soldOut || !SALES_OPEN) return;
     if (honeypot.current?.value) return; // bot mengisi field tersembunyi
     if (now - lastClick.current < CLICK_COOLDOWN_MS) return;
     if (!withinAttemptLimit()) {
@@ -221,10 +369,6 @@ function BundleCard({ pkg }: { pkg: PackageData }) {
     lastClick.current = now;
     setBusy(true);
     setMessage(null);
-
-    const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
-      `Halo, saya mau order ${pkg.title}`
-    )}`;
 
     try {
       if (apiUrl) {
@@ -248,7 +392,7 @@ function BundleCard({ pkg }: { pkg: PackageData }) {
         if (!res.ok) throw new Error();
         setSold((s) => s + 1);
       }
-      window.open(waUrl, "_blank", "noopener,noreferrer");
+      setOpen(true);
     } catch {
       setMessage("Terjadi kendala. Silakan coba lagi.");
     } finally {
@@ -271,7 +415,7 @@ function BundleCard({ pkg }: { pkg: PackageData }) {
         {pkg.description}
       </p>
 
-      {!soldOut && (
+      {SALES_OPEN && !soldOut && (
         <p className="mt-3 text-xs font-semibold text-orange-600">
           Sisa {left} dari {quota} slot
         </p>
@@ -300,11 +444,13 @@ function BundleCard({ pkg }: { pkg: PackageData }) {
         <button
           type="button"
           onClick={handleClaim}
-          disabled={soldOut || busy || !ready}
+          disabled={!SALES_OPEN || soldOut || busy || !ready}
           className="flex items-center gap-1.5 rounded-xl bg-[#102741] px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-[#0b1c30] disabled:cursor-not-allowed disabled:bg-neutral-300"
         >
           {busy ? (
             <Loader2 className="h-3.5 w-3.5 animate-spin" />
+          ) : !SALES_OPEN ? (
+            "Segera Hadir"
           ) : soldOut ? (
             "Stok Habis"
           ) : (
@@ -315,6 +461,9 @@ function BundleCard({ pkg }: { pkg: PackageData }) {
           )}
         </button>
       </div>
+
+      <AccountHint />
+      {open && <PaymentModal pkg={pkg} onClose={() => setOpen(false)} />}
 
       {soldOut && (
         <p className="mt-3 rounded-lg bg-orange-50 px-3 py-2 text-xs font-medium text-orange-600">
