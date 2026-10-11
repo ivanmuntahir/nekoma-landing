@@ -8,7 +8,7 @@ const tryoutMenu = [
   {
     label: 'SKD CPNS',
     desc: 'TWK, TIU, dan TKP',
-    href: '#tryout',
+    href: '#paket-tryout',
   },
   {
     label: 'SKB CPNS',

@@ -14,7 +14,7 @@ const CONFIRM_ETA = "maksimal 1×24 jam"; // estimasi konfirmasi
 const QRIS_IMAGE = "/img/qris.webp"; // taruh gambar QRIS di public/img/qris.webp
 const REGISTER_URL = "https://tryout.nekoma.id/dashboard/register";
 const LOGIN_URL = "https://tryout.nekoma.id/dashboard/login";
-const BUNDLE_QUOTA = 20; // ubah sesuai kebutuhan (saran: 30-50)
+const BUNDLE_QUOTA = 30; // ubah sesuai kebutuhan (saran: 30-50)
 const MIN_DWELL_MS = 2500; // tombol "aktif" setelah kartu terlihat sekian ms
 const CLICK_COOLDOWN_MS = 8000; // jeda antar klik
 const MAX_ATTEMPTS_PER_HOUR = 5; // batas percobaan per browser
@@ -401,7 +401,7 @@ function BundleCard({ pkg }: { pkg: PackageData }) {
   }
 
   return (
-    <div className="group relative flex flex-col rounded-3xl border-2 border-orange-300 bg-white p-4 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:p-5">
+    <div className="group relative flex flex-col rounded-3xl border-2 border-orange-300 bg-white p-4 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:p-5" id="paket-tryout">
       <span className="absolute -top-3 left-5 flex items-center gap-1 rounded-full bg-orange-500 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white">
         <Flame className="h-3 w-3" /> Paling Hemat
       </span>
