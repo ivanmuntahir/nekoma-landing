@@ -59,7 +59,7 @@ const rp = (n: number) =>
   }).format(n);
 
 const SINGLE = { price: 12000, original: 25000 };
-const BUNDLE = { price: 20000, original: 75000 };
+const BUNDLE = { price: 15000, original: 75000 };
 
 const SINGLE_PACKAGES: PackageData[] = [1, 2, 3].map((part) => ({
   id: part,

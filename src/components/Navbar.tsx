@@ -162,10 +162,10 @@ export default function Navbar() {
             </a>
 
             <a
-              href="https://wa.me/6285777126038?text=Halo%20Nekoma%20Academy%2C%20saya%20ingin%20mendapatkan%20mini%20tryout%20gratis."
+              href="https://wa.me/6285777126038?text=Halo%20Nekoma%20Academy%2C%20saya%20ingin%20mendapatkan%20promo%2015rb%20dapat%203%20tryout."
               className="inline-flex items-center justify-center rounded-lg bg-nekoma-orange px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-nekoma-dark-orange hover:shadow-md"
             >
-              Coba Gratis
+              Ambil Promo Sekarang
             </a>
           </div>
 
