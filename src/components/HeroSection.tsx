@@ -107,7 +107,7 @@ export default function HeroSection() {
 
               <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">
                 <strong className="text-nekoma-navy">
-                  Gratis trial tryout sebelum daftar.
+                  Persiapkan masa depanmu.
                 </strong>{' '}
                 Latihan soal mengikuti standar CAT BKN, lengkap dengan evaluasi
                 hasil dan gambaran posisi performamu.
