@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
 
-const ADMIN_WA_NUMBER = '6285777126038'
+const ADMIN_WA_NUMBER = '628567890160'
 
 const NEED_OPTIONS = [
   {

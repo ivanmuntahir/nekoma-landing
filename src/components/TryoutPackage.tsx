@@ -7,7 +7,7 @@ import { ArrowRight, Clock, FileQuestion, Flame, Loader2, X } from "lucide-react
 /* ------------------------------------------------------------------ */
 /* KONFIGURASI                                                         */
 /* ------------------------------------------------------------------ */
-const WA_NUMBER = "6285777126038";
+const WA_NUMBER = "628567890160";
 const SALES_OPEN = true; // ubah ke false untuk mode "Segera Hadir" (tombol Beli dinonaktifkan)
 const SERVICE_HOURS = "08.00–22.00 WIB"; // jam layanan admin
 const CONFIRM_ETA = "maksimal 1×24 jam"; // estimasi konfirmasi
