@@ -15,6 +15,7 @@ const QRIS_IMAGE = "/img/qris.webp"; // taruh gambar QRIS di public/img/qris.web
 const REGISTER_URL = "https://tryout.nekoma.id/dashboard/register";
 const LOGIN_URL = "https://tryout.nekoma.id/dashboard/login";
 const BUNDLE_QUOTA = 100; // ubah sesuai kebutuhan (saran: 30-50)
+const BUNDLE_SOLD_INITIAL = 62; 
 const MIN_DWELL_MS = 2500; // tombol "aktif" setelah kartu terlihat sekian ms
 const CLICK_COOLDOWN_MS = 8000; // jeda antar klik
 const MAX_ATTEMPTS_PER_HOUR = 5; // batas percobaan per browser
@@ -299,7 +300,8 @@ function PackageCard({ pkg }: { pkg: PackageData }) {
 
 function BundleCard({ pkg }: { pkg: PackageData }) {
   const apiUrl = process.env.NEXT_PUBLIC_TRYOUT_API_URL;
-  const [sold, setSold] = useState(0);
+  // const [sold, setSold] = useState(0);
+  const [sold, setSold] = useState(BUNDLE_SOLD_INITIAL);
   const [quota, setQuota] = useState(BUNDLE_QUOTA);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
